@@ -1,0 +1,57 @@
+language: java
+
+jdk: oraclejdk7
+
+env:
+ global: 
+ - DISPLAY=:99.0
+ - RUNNER=../download.eclipse.org/rcptt/release/2.0.0/runner/rcptt.runner-2.0.0.zip
+ - AUT=../uml-designer.s3.amazonaws.com/nightly/${TRAVIS_BRANCH}/bundles/UMLDesigner-linux.gtk.x86_64.zip
+ matrix:
+ - TEST_SUITE=ActivityDiagram
+ - TEST_SUITE=ClassDiagram
+ - TEST_SUITE=ComponentDiagram
+ - TEST_SUITE=CompositeStructureDiagram
+ - TEST_SUITE=Dashboard
+ - TEST_SUITE=DeploymentDiagram
+ - TEST_SUITE=DocumentationTable
+ - TEST_SUITE=Examples
+ - TEST_SUITE=NewProject
+ - TEST_SUITE=PackageContainmentDiagram
+ - TEST_SUITE=PackageHierarchy
+ - TEST_SUITE=ProfileDiagram
+ - TEST_SUITE=ReusedTools
+ - TEST_SUITE=SequenceDiagram
+ #- TEST_SUITE=StateMachineDiagram
+ - TEST_SUITE=UseCaseDiagram
+
+install: true
+sudo : false
+cache:
+ apt : true
+ directories:
+ - ../download.eclipse.org/rcptt/release/2.0.0/runner
+addons:
+  apt:
+    packages:
+    - metacity
+    - libgtk2.0-0
+
+before_script:
+ - export SWT_GTK3=0
+ - "/sbin/start-stop-daemon --start --quiet --pidfile /tmp/custom_xvfb_99.pid --make-pidfile --background --exec /usr/bin/Xvfb -- :99 -ac -screen 0 1440x900x16"
+ - sh -e /etc/init.d/xvfb start
+ - sleep 10 # give xvfb some time to start
+ - metacity --sm-disable --replace &
+ - sleep 10 # give metacity some time to start
+# Get RCPTT runner
+# Check if runner exists in cache else download it.
+# To force the download of the runner clear the cache thanks to the cache button in the travis web ui
+ - wget -mN http://download.eclipse.org/rcptt/release/2.0.0/runner/rcptt.runner-2.0.0.zip
+# Download AUT
+ - wget -mN http://uml-designer.s3.amazonaws.com/nightly/${TRAVIS_BRANCH}/bundles/UMLDesigner-linux.gtk.x86_64.zip
+
+script:
+ - export
+# Launch tests
+ - mvn clean test -f org.obeonetwork.dsl.uml2.tests.rcptt/pom.xml -Daut=$AUT -Drcpttrunner=$RUNNER -Dsuite=$TEST_SUITE -Drepotoken=$repotoken
