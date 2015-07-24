@@ -1,0 +1,91 @@
+--- RCPTT testcase ---
+Format-Version: 1.0
+Context-Type: org.eclipse.rcptt.ctx.ecl
+Element-Name: CreateInterruptibleActivityRegionInActivityDiagramInTestProject
+Element-Type: context
+Element-Version: 2.0
+Id: _xGaaEDICEeWAyKkjMTJzaQ
+Runtime-Version: 2.0.0.201506120617
+Save-Time: 7/24/15 3:23 PM
+
+------=_.description-216f885c-d591-38ce-8ea2-e4f8cb4d6ffa
+Content-Type: text/plain
+Entry-Name: .description
+
+Create an interruptible region create an opaque action and create a second opaque action in the interruptible region
+------=_.description-216f885c-d591-38ce-8ea2-e4f8cb4d6ffa--
+------=_.ecl.context-718f04b4-ed39-33e3-af62-0995e4561998
+Content-Type: text/ecl
+Entry-Name: .ecl.context
+
+// Create interruptible region
+with [get-editor "NewModel Activity Diagram"] {
+    with [get-palette] {
+        with [get-palette-entry Group] {
+            mouse-move 12 10 button1 -height 24 -width 125
+            mouse-press 12 10 button1 -height 24 -width 125
+            mouse-release 12 10 button1 524288 -height 24 -width 125
+        }
+        with [get-palette-entry InterruptibleActivityRegion] {
+            mouse-move 36 13 button1 -height 24 -width 125
+            mouse-press 36 13 button1 -height 24 -width 125
+            mouse-release 36 13 button1 524288 -height 24 -width 125
+        }
+    }
+    
+    with [get-diagram -index 1 | get-edit-part -name "NewModel Activity Diagram"] {
+        mouse-move 556 72 -height 400 -width 926
+        with [get-edit-part -name NewModel | get-edit-part 
+            -className DNodeContainerViewNodeContainerCompartmentEditPart] {
+            mouse-move 70 53 button1 -height 387 -width 542
+            mouse-press 70 53 button1 -height 387 -width 542
+            mouse-release 70 53 button1 524288 -height 387 -width 542
+        }
+    }
+
+// Create opaque action
+    with [get-palette | get-palette-entry "Opaque Action"] {
+        mouse-move 22 14 button1 -height 24 -width 125
+        mouse-press 22 14 button1 -height 24 -width 125
+        mouse-release 22 14 button1 524288 -height 24 -width 125
+    }
+    with [get-diagram -index 1 | get-edit-part -name "NewModel Activity Diagram" | get-edit-part -name NewModel 
+        | get-edit-part -className DNodeContainerViewNodeContainerCompartmentEditPart] {
+        mouse-move 117 189 button1 -height 387 -width 542
+        mouse-press 117 189 button1 -height 387 -width 542
+        mouse-release 117 189 button1 524288 -height 387 -width 542
+    }
+    
+// Create opaque action in interruptible region
+    with [get-palette] {
+        with [get-palette-entry "Opaque Action"] {
+            mouse-move 50 13 button1 -height 24 -width 125
+            mouse-press 50 13 button1 -height 24 -width 125
+            mouse-release 50 13 button1 524288 -height 24 -width 125
+        }
+    }
+    with [get-diagram -index 1 | get-edit-part -name "NewModel Activity Diagram" | get-edit-part -name NewModel 
+        | get-edit-part -className DNodeContainerViewNodeContainerCompartmentEditPart] {
+        mouse-move 281 82 -height 387 -width 542
+        with [get-edit-part -name InterruptibleActivityRegion1 | get-edit-part 
+            -className DNodeContainerViewNodeContainerCompartment2EditPart] {
+            mouse-move 60 37 button1 -height 68 -width 189
+            mouse-press 60 37 button1 -height 68 -width 189
+            mouse-release 60 37 button1 524288 -height 68 -width 189
+        }
+    }
+}
+
+// Create another opaque action
+    with [get-palette | get-palette-entry "Opaque Action"] {
+        mouse-move 22 14 button1 -height 24 -width 125
+        mouse-press 22 14 button1 -height 24 -width 125
+        mouse-release 22 14 button1 524288 -height 24 -width 125
+    }
+    with [get-diagram -index 1 | get-edit-part -name "NewModel Activity Diagram" | get-edit-part -name NewModel 
+        | get-edit-part -className DNodeContainerViewNodeContainerCompartmentEditPart] {
+        mouse-move 400 229 button1 -height 387 -width 542
+        mouse-press 400 229 button1 -height 387 -width 542
+        mouse-release 400 229 button1 524288 -height 387 -width 542
+    }
+------=_.ecl.context-718f04b4-ed39-33e3-af62-0995e4561998--
